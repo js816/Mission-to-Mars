@@ -1,6 +1,6 @@
 # Import Splinter, BeautifulSoup, and Pandas
 from splinter import Browser
-from bs4 import BeautifulSoup as soup
+from bs4 import BeautifulSoup  # Not assigning soup alias b/c of debugging with deliverable 1
 import pandas as pd
 import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
@@ -19,7 +19,8 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "hemispheres": scrape_hemispheres()  # ToDo - verify syntax and assignment
     }
 
     # Stop webdriver and return data
@@ -39,7 +40,7 @@ def mars_news(browser):
 
     # Convert the browser html to a soup object and then quit the browser
     html = browser.html
-    news_soup = soup(html, 'html.parser')
+    news_soup = BeautifulSoup(html, 'html.parser')
 
     # Add try/except for error handling
     try:
@@ -66,7 +67,7 @@ def featured_image(browser):
 
     # Parse the resulting html with soup
     html = browser.html
-    img_soup = soup(html, 'html.parser')
+    img_soup = BeautifulSoup(html, 'html.parser')
 
     # Add try/except for error handling
     try:
@@ -97,7 +98,55 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
+def scrape_hemispheres():
+    # Initiate headless driver for deployment
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=True)
+
+    # 1. Use browser to visit the URL 
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    # Parse the resulting html with soup
+    results_html = browser.html
+    homepage_soup = BeautifulSoup(browser.html, 'html.parser')
+
+    # Create a list of the pages to iterate through
+    results = homepage_soup.find_all('div', class_='description')
+
+    #2 - # Creating empty list to hold image url and titles
+    hemisphere_image_urls = []
+
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
+    # Iterating through the hemisphere pages
+    # Great thank you to Sandhya and Sasha for working through extensive debugging with me in office hours!
+    for result in results:
+
+        # Capture the title from the homepage result
+        title = result.find('h3').text
+        
+        # Visiting each of the hemisphere pages
+        hemisphere_page = result.find('a')['href']
+        base_url = 'https://marshemispheres.com/'
+        full_url = f'{base_url}{hemisphere_page}'
+        #print(full_url)
+        browser.visit(full_url)
+        
+        # Parse each hemisphere page
+        results_html = browser.html
+        hemisphere_soup = BeautifulSoup(browser.html, 'html.parser')
+        
+        # Capture the full image jpg url
+        relative_url = hemisphere_soup.find('img', class_='wide-image')['src']
+        image_url = f'{base_url}{relative_url}'
+
+        # Creating the dictionary and appending to the list
+        hemisphere_image_urls.append({'img_url': image_url, 'title': title})
+
+    return hemisphere_image_urls
+
 if __name__ == "__main__":
 
     # If running as script, print scraped data
     print(scrape_all())
+
