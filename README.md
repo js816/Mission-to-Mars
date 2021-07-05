@@ -43,6 +43,12 @@ These images, below, help to keep Robin’s application visually interesting and
 
 ![Hemisphere_images](https://user-images.githubusercontent.com/82730954/124506257-e0b63a00-dd90-11eb-97b6-099adc54c2f5.png)
 
+## Visual Enhancements
+
+A number of visual Bootstrap enhancements were added to the website to make it more appealing.  
+
+The text for the various headings were centered to provide a more consistent, streamlined look.  Each of the main sections, and the scraping button, was also converted to a red color to help subtly continue the theme of the red planet.  The corners were rounded for the hemisphere images and the sizing was reduced to allow these images, for many screen widths, to display two across.  As needed for smaller form factors such as mobile phones, the images will automatically adjust for the best representation possible.
+
 # Summary
 
 Working with Robin to develop scripting to automate the webscraping process allows Robin to easily, efficiently, and with very little effort, look for updated data and keep her users abreast of the latest news and images for Mars.
