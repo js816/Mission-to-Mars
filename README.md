@@ -13,7 +13,7 @@ The purpose of this project was to work with Robin to develop code to automatica
 
 The code we developed first gets the latest Mars news headline and teaser from redplanetscience.com.  These articles help keep the app’s users informed about the latest discoveries and investigations into the red planet.
 
-The image below shows a recent headline scraped from the site for use on Robin’s application.
+The screenshot below shows a recent headline scraped from the site for use on Robin’s application.
 
 ![Mars_news](https://user-images.githubusercontent.com/82730954/124506156-aea4d800-dd90-11eb-8c85-00a97b669158.png)
 
@@ -35,7 +35,7 @@ Next, the code gathers a table that compares various facts for Mars and Earth fr
 
 The table above will update with additional findings as they are added to the original site.
 
-## Mars Facts
+## Mars Hemisphere Images
 
 Finally, the code visits marshemispheres.com.  Here the code retrieves high quality images and titles of the images for the Cerberus, Schiaparelli, Syrtis Major, and Valles Marineris hemispheres.
 
